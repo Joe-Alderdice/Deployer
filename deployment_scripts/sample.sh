@@ -1,4 +1,4 @@
-cd ~/var/node/com.vivatrucks.discord
+cd ~/dir/to/project
 
 echo "----------------------------------------------------"
 echo "                 Gitlab Auto Deployer               "
@@ -13,7 +13,7 @@ echo "--------- Pulled successfully from master ----------"
 echo ""
 echo "---------------- Restarting server -----------------"
 
-pm2 restart Discord
+pm2 restart something
 
 echo "---------- Server restarted Successfully -----------"
 echo ""
