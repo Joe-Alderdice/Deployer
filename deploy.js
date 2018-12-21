@@ -32,6 +32,9 @@ function deploy(res, project) {
 			project.scriptName
 		}`,
 		function(err, stdout, stderr) {
+			console.log(err)
+			console.log(stdout)
+			console.log(stderr)
 			if (stderr) {
 				console.error(stderr)
 				return res.sendStatus(500)
