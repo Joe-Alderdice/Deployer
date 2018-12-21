@@ -1,7 +1,9 @@
 {
 	"secret": "",
 	"deployerDir": "",
-	"port": 3000,
+	"port": 8080,
+	"domain": "",
+	"username": "",
 
 	"projects": [
 		{
