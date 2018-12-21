@@ -10,7 +10,6 @@ app.post("/webhooks/gitlab", (req, res) => {
 	if (req.get("X-Gitlab-Token") !== config.secret) return res.sendStatus(401)
 
 	if (req.body.event_name !== "push") return res.sendStatus(406)
-	let branch = req.body.ref
 
 	// Loop through the projects
 	for (let i = 0; i < config.projects.length; i++) {
@@ -37,7 +36,7 @@ function deploy(res, project) {
 				return res.sendStatus(500)
 			}
 			console.log(stdout)
-			res.sendStatus(200)
+			return res.sendStatus(200)
 		}
 	)
 }
