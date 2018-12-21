@@ -32,11 +32,15 @@ function deploy(res, project) {
 			project.scriptName
 		}`,
 		function(err, stdout, stderr) {
-			console.log(stdout)
+			if (stderr) {
+				console.error(stderr)
+				return res.sendStatus(500)
+			}
 			if (err) {
 				console.error(err)
 				return res.sendStatus(500)
 			}
+			console.log(stdout)
 			res.sendStatus(200)
 		}
 	)
