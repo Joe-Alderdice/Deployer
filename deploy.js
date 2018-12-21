@@ -27,7 +27,6 @@ app.post("/webhooks/gitlab", (req, res) => {
 })
 
 function deploy(res, project) {
-	console.log("[LOG] Starting Deployment")
 	childProcess.exec(
 		`cd ${config.deployerDir} && bash ./deployment_scripts/${
 			project.scriptName
