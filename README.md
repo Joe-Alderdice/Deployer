@@ -10,7 +10,7 @@ This is a very simple gitlab & github webhook auto deployer
 
 ## usage
 
-1. Run: `git clone git@gitlab.com:Jackdouglas/deployer.git`
+1. Run: `git clone git@github.com:Jackdouglas99/Deployer.git`
 2. Run: `npm i`
 3. Rename config.sample.json to config.json
 4. Create your own deploy scripts in the deployment_scripts folder
