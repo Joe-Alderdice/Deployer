@@ -18,7 +18,7 @@ app.post("/webhooks/gitlab", (req, res) => {
 		if (req.body.project.name == config.projects[i].repoName) {
 			// Push was to the given branch
 			if (req.body.ref == "refs/heads/" + config.projects[i].branch) {
-				deploy(res, conf.projects[i])
+				deploy(res, config.projects[i])
 			}
 			return res.statusCode(406)
 		}
