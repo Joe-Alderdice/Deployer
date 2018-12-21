@@ -12,6 +12,19 @@ app.post("/webhooks/gitlab", (req, res) => {
 	if (req.body.event_name !== "push") return res.sendStatus(406)
 	let branch = req.body.ref
 
+	// Loop through the projects
+	for (let i = 0; i < config.projects.length; i++) {
+		// Found a proejct with same repo name
+		if (req.body.project.name == config.projects[i].repoName) {
+			// Push was to the given branch
+			if (req.body.ref == "refs/heads/" + config.projects[i].branch) {
+				deploy(res, conf.projects[i])
+			}
+			return res.statusCode(406)
+		}
+		return res.statusCode(406)
+	}
+
 	if (branch == "refs/heads/master") {
 		deploy(res)
 	} else {
@@ -19,20 +32,21 @@ app.post("/webhooks/gitlab", (req, res) => {
 	}
 })
 
-function deploy(res) {
+function deploy(res, project) {
 	console.log("[LOG] Starting Deployment")
-	childProcess.exec(`cd ${config.deployerDir} && bash ./deploy.sh`, function(
-		err,
-		stdout,
-		stderr
-	) {
-		console.log(stdout)
-		if (err) {
-			console.error(err)
-			return res.sendStatus(500)
+	childProcess.exec(
+		`cd ${config.deployerDir} && bash ./deployment_scripts/${
+			project.scriptName
+		}`,
+		function(err, stdout, stderr) {
+			console.log(stdout)
+			if (err) {
+				console.error(err)
+				return res.sendStatus(500)
+			}
+			res.sendStatus(200)
 		}
-		res.sendStatus(200)
-	})
+	)
 }
 
 app.listen(config.port || 3000, () =>
