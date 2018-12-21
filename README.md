@@ -16,9 +16,9 @@ This is a very simple gitlab & github webhook auto deployer
 This example will be for gitlab. google it for github
 
 1.  Go-to your project and on the sidebar hover over settings and click integrations
-![image](https://images.jackdouglas.info/VOWTpZgg.png)
+![image][https://images.jackdouglas.info/VOWTpZgg.png]
 
 2. Enter the deployer url, token which you set in your config and enable push events and enter master into the text box
-![image](https://images.jackdouglas.info/Ust6fczM.png)
+![image][https://images.jackdouglas.info/Ust6fczM.png]
 
 That should be everything working correctly
