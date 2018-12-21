@@ -2,12 +2,12 @@ const express = require("express")
 const app = express()
 const bodyParser = require("body-parser")
 const childProcess = require("child_process")
+const config = require("./config.json")
 
 app.use(bodyParser.json()) // for parsing application/json
 
 app.post("/webhooks/gitlab", (req, res) => {
-	if (req.get("X-Gitlab-Token") !== "Qzmb1a5KdolMURtFBk9c7r8545L6Vt9p")
-		return res.sendStatus(401)
+	if (req.get("X-Gitlab-Token") !== config.secret) return res.sendStatus(401)
 
 	if (req.body.event_name !== "push") return res.sendStatus(406)
 	let branch = req.body.ref
@@ -21,7 +21,7 @@ app.post("/webhooks/gitlab", (req, res) => {
 
 function deploy(res) {
 	console.log("[LOG] Starting Deployment")
-	childProcess.exec("cd /var/node/deployer && bash ./deploy.sh", function(
+	childProcess.exec(`cd ${config.deployerDir} && bash ./deploy.sh`, function(
 		err,
 		stdout,
 		stderr
@@ -35,4 +35,6 @@ function deploy(res) {
 	})
 }
 
-app.listen(3000, () => console.log(`Git Auto Deployer listening on port 3000!`))
+app.listen(config.port || 3000, () =>
+	console.log(`Git Auto Deployer listening on port ${config.port || 3000}!`)
+)
