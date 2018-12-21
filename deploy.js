@@ -17,7 +17,12 @@ app.post("/webhooks/gitlab", (req, res) => {
 		if (req.body.project.name == config.projects[i].repoName) {
 			// Push was to the given branch
 			if (req.body.ref == "refs/heads/" + config.projects[i].branch) {
-				return deploy(res, config.projects[i])
+				let deployment = deploy(res, config.projects[i])
+				if (deployment) {
+					return res.sendStatus(200)
+				} else {
+					return res.sendStatus(500)
+				}
 			}
 			return res.statusCode(406)
 		}
@@ -33,10 +38,10 @@ function deploy(res, project) {
 		function(err, stdout, stderr) {
 			if (err) {
 				console.error(err)
-				return res.sendStatus(500)
+				return false
 			}
 			console.log(stdout)
-			return res.sendStatus(200)
+			return true
 		}
 	)
 }
