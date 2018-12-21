@@ -38,10 +38,6 @@ function deploy(res, project) {
 			}
 			console.log(stdout)
 			res.sendStatus(200)
-			if (stderr) {
-				console.error(stderr)
-				return res.sendStatus(500)
-			}
 		}
 	)
 }
